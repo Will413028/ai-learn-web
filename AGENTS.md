@@ -8,3 +8,4 @@
 - 產品業務與 AI orchestration 放在 FastAPI；前端不得持有 provider secrets。後端逐題判分，提交後才揭露答案與解析；正確率和經驗值由程式計算，不能接受 client 的 is_correct 或讓 AI 覆寫統計。
 - 未決的範圍、資料模型、對外契約與費用選擇不得默認成已決。
 - 測試使用 fake providers；真實外部服務驗證須單獨執行，不能由一般測試觸發。
+- 決策紀錄（ADR）：`docs/adr/`。
