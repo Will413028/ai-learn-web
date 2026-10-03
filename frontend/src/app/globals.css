@@ -1,0 +1,58 @@
+:root { color-scheme: light; --ink:#20382f; --muted:#657269; --green:#286b4d; }
+* { box-sizing:border-box; }
+body { margin:0; background:#f5f4ef; color:var(--ink); font-family:Arial,"PingFang TC",sans-serif; }
+main { max-width:880px; margin:auto; padding:36px 24px 60px; }
+header { display:flex; justify-content:space-between; align-items:center; }
+.brand { font-size:15px; letter-spacing:3px; font-weight:800; }
+.badge { font-size:12px; padding:7px 12px; background:#e4ebdf; border-radius:24px; }
+.intro { padding:58px 0 32px; }
+.eyebrow { color:var(--green); font-size:13px; letter-spacing:1px; }
+h1 { font-size:clamp(40px,7vw,64px); line-height:1.2; margin:14px 0 20px; letter-spacing:-2px; }
+.intro>p:last-child,footer { color:var(--muted); font-size:15px; line-height:1.8; }
+.card { background:#fff; border:1px solid #e1e4db; padding:32px; border-radius:20px; box-shadow:0 12px 36px #24372908; }
+form>label { display:block; margin-bottom:14px; font-weight:600; }
+.input-row { display:flex; gap:12px; }
+.input-row input { flex:1; min-width:0; border:1px solid #cfd8cf; border-radius:9px; padding:15px; font-size:16px; }
+button { border:0; border-radius:9px; padding:14px 20px; background:var(--green); color:white; font-size:15px; cursor:pointer; }
+button:disabled { opacity:.5; cursor:default; }
+input:focus-visible,button:focus-visible { outline:3px solid #9bc7a8; outline-offset:3px; }
+.question { margin-top:32px; padding-top:24px; border-top:1px solid #e3e7df; }
+h2 { font-size:22px; line-height:1.6; }
+fieldset { border:0; padding:0; margin:20px 0; }
+legend { color:var(--muted); font-size:13px; margin-bottom:12px; }
+.option { display:flex; align-items:center; gap:12px; padding:16px; margin:10px 0; background:#f7f8f3; border:1px solid #e1e6dc; border-radius:10px; cursor:pointer; line-height:1.6; }
+.option strong { margin-right:8px; }
+.result { background:#edf4e9; border-radius:12px; padding:20px; line-height:1.7; }
+.result h3 { margin-top:0; }
+.error { color:#a33432; }
+footer { margin-top:24px; font-size:12px; }
+@media(max-width:560px) { main { padding:24px 18px; } .card { padding:22px; } .input-row { flex-direction:column; } .intro { padding-top:42px; } }
+nav,.actions { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:24px 0; }
+a { color:var(--green); }
+.brand { text-decoration:none; }
+.secondary { background:#e8eee5; color:var(--ink); }
+textarea,input:not([type=checkbox]):not([type=radio]),select { width:100%; border:1px solid #cfd8cf; border-radius:9px; padding:12px; font:inherit; margin:8px 0 16px; background:white; color:var(--ink); }
+textarea { min-height:120px; resize:vertical; }
+.grid { display:grid; grid-template-columns:2fr 1fr; gap:18px; }
+.check { display:inline-flex; align-items:center; gap:8px; margin-right:20px; font-weight:400; }
+form>label.check { display:flex; }
+.card+.card { margin-top:24px; }
+.section-title { font-size:32px; letter-spacing:-1px; margin:0 0 24px; }
+.row { display:flex; justify-content:space-between; gap:16px; align-items:center; padding:20px 0; border-bottom:1px solid #e1e6dc; }
+.row h3 { margin:0; overflow-wrap:anywhere; }
+.row p { font-size:14px; color:var(--muted); }
+.row .actions { margin:0; }
+.warning { background:#fff3d7; padding:16px; border-radius:10px; line-height:1.7; }
+.job { margin-top:20px; padding:12px 0; }
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.stats p { display:flex; flex-direction:column; gap:8px; color:var(--muted); }
+.stats strong { font-size:25px; color:var(--green); }
+figure { margin:24px 0; }
+figure img { display:block; max-width:100%; height:auto; border-radius:12px; }
+figcaption { padding:12px 0; }
+dl>div { padding:10px 0; }
+dt { font-weight:700; }
+dd { margin:8px 0 0; color:var(--muted); }
+blockquote { margin:24px 0; border-left:3px solid var(--green); padding:10px 20px; background:#f7f8f3; }
+li,.report p { line-height:1.8; }
+@media(max-width:560px) { .grid { grid-template-columns:1fr; gap:0; } .row { align-items:flex-start; flex-direction:column; } .stats { grid-template-columns:1fr 1fr; } nav button { padding:10px 12px; } }

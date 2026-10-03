@@ -1,0 +1,1472 @@
+{
+  "commit": "d68cf0b77dd89cae1143abe8c300b239da79a6ea",
+  "tracked_file_count": 150,
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/api/v1/health",
+      "function": "health_check",
+      "source": "backend/app/api/v1/routes/health.py:8",
+      "parameters": [],
+      "step": 2,
+      "disposition": "rewrite"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/knowledge/documents",
+      "function": "upload_document",
+      "source": "backend/app/api/v1/routes/knowledge.py:12",
+      "parameters": [
+        "file",
+        "user_id"
+      ],
+      "step": 6,
+      "disposition": "rewrite"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/knowledge/documents",
+      "function": "list_documents",
+      "source": "backend/app/api/v1/routes/knowledge.py:24",
+      "parameters": [
+        "user_id"
+      ],
+      "step": 6,
+      "disposition": "rewrite"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/knowledge/documents/{doc_id}",
+      "function": "get_document_status",
+      "source": "backend/app/api/v1/routes/knowledge.py:30",
+      "parameters": [
+        "doc_id",
+        "user_id"
+      ],
+      "step": 6,
+      "disposition": "rewrite"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/knowledge/documents/{doc_id}",
+      "function": "delete_document",
+      "source": "backend/app/api/v1/routes/knowledge.py:36",
+      "parameters": [
+        "doc_id",
+        "user_id"
+      ],
+      "step": 6,
+      "disposition": "rewrite"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/quiz/generate",
+      "function": "quiz_generate",
+      "source": "backend/app/api/v1/routes/quiz.py:19",
+      "parameters": [
+        "req",
+        "user_id"
+      ],
+      "step": 3,
+      "disposition": "rewrite"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/quiz/generate/async",
+      "function": "quiz_generate_async",
+      "source": "backend/app/api/v1/routes/quiz.py:28",
+      "parameters": [
+        "req",
+        "user_id"
+      ],
+      "step": 5,
+      "disposition": "rewrite"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/quiz/task/{task_id}",
+      "function": "quiz_task_status",
+      "source": "backend/app/api/v1/routes/quiz.py:38",
+      "parameters": [
+        "task_id"
+      ],
+      "step": 5,
+      "disposition": "rewrite"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/report/generate",
+      "function": "report_generate",
+      "source": "backend/app/api/v1/routes/report.py:15",
+      "parameters": [
+        "req",
+        "user_id"
+      ],
+      "step": 3,
+      "disposition": "rewrite"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/user/login",
+      "function": "login",
+      "source": "backend/app/api/v1/routes/user.py:13",
+      "parameters": [
+        "req"
+      ],
+      "step": 4,
+      "disposition": "replace-auth"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/user/profile",
+      "function": "get_profile",
+      "source": "backend/app/api/v1/routes/user.py:19",
+      "parameters": [
+        "user_id"
+      ],
+      "step": 4,
+      "disposition": "rewrite"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/user/profile",
+      "function": "update_profile",
+      "source": "backend/app/api/v1/routes/user.py:25",
+      "parameters": [
+        "req",
+        "user_id"
+      ],
+      "step": 4,
+      "disposition": "rewrite"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/user/quizzes",
+      "function": "get_quiz_list",
+      "source": "backend/app/api/v1/routes/user.py:34",
+      "parameters": [
+        "page",
+        "page_size",
+        "user_id"
+      ],
+      "step": 4,
+      "disposition": "rewrite"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/user/quizzes/{quiz_id}",
+      "function": "get_quiz_detail",
+      "source": "backend/app/api/v1/routes/user.py:44",
+      "parameters": [
+        "quiz_id",
+        "user_id"
+      ],
+      "step": 4,
+      "disposition": "rewrite"
+    }
+  ],
+  "models": [
+    {
+      "name": "ApiResponse",
+      "fields": [
+        "code",
+        "message",
+        "data"
+      ],
+      "source": "backend/app/models/common.py:7",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "KnowledgeUploadResponse",
+      "fields": [
+        "doc_id",
+        "file_name",
+        "status"
+      ],
+      "source": "backend/app/models/knowledge.py:7",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "KnowledgeDocumentItem",
+      "fields": [
+        "doc_id",
+        "file_name",
+        "file_type",
+        "file_size",
+        "status",
+        "chunk_count",
+        "error_message",
+        "created_at"
+      ],
+      "source": "backend/app/models/knowledge.py:14",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "KnowledgeListResponse",
+      "fields": [
+        "items"
+      ],
+      "source": "backend/app/models/knowledge.py:26",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "KnowledgeStatusResponse",
+      "fields": [
+        "doc_id",
+        "file_name",
+        "status",
+        "chunk_count",
+        "error_message"
+      ],
+      "source": "backend/app/models/knowledge.py:31",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "QuestionOption",
+      "fields": [
+        "key",
+        "text"
+      ],
+      "source": "backend/app/models/quiz.py:7",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "Question",
+      "fields": [
+        "id",
+        "type",
+        "stem",
+        "options",
+        "answer",
+        "explanation",
+        "knowledge_point",
+        "difficulty",
+        "image_url"
+      ],
+      "source": "backend/app/models/quiz.py:12",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "QuizOutput",
+      "fields": [
+        "title",
+        "summary",
+        "questions"
+      ],
+      "source": "backend/app/models/quiz.py:24",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "QuizGenerateRequest",
+      "fields": [
+        "user_input",
+        "question_count",
+        "difficulty",
+        "doc_id",
+        "generate_images"
+      ],
+      "source": "backend/app/models/quiz.py:32",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "QuizGenerateResponse",
+      "fields": [
+        "quiz_id",
+        "title",
+        "summary",
+        "questions",
+        "image_notice"
+      ],
+      "source": "backend/app/models/quiz.py:50",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "AnswerRecord",
+      "fields": [
+        "question_id",
+        "selected_answers",
+        "is_correct",
+        "duration_ms"
+      ],
+      "source": "backend/app/models/quiz.py:60",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "QuizTaskCreateResponse",
+      "fields": [
+        "task_id"
+      ],
+      "source": "backend/app/models/quiz.py:69",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "QuizTaskStatusResponse",
+      "fields": [
+        "task_id",
+        "status",
+        "result",
+        "error_message"
+      ],
+      "source": "backend/app/models/quiz.py:74",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "ReportGenerateRequest",
+      "fields": [
+        "quiz_id",
+        "topic",
+        "questions",
+        "answer_records"
+      ],
+      "source": "backend/app/models/report.py:7",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "ReportOutput",
+      "fields": [
+        "accuracy",
+        "mastered_points",
+        "weak_points",
+        "three_line_summary",
+        "advice",
+        "share_quote"
+      ],
+      "source": "backend/app/models/report.py:14",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "ReportGenerateResponse",
+      "fields": [
+        "accuracy",
+        "mastered_points",
+        "weak_points",
+        "three_line_summary",
+        "advice",
+        "share_quote"
+      ],
+      "source": "backend/app/models/report.py:25",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "LoginRequest",
+      "fields": [
+        "code"
+      ],
+      "source": "backend/app/models/user.py:8",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "LoginResponse",
+      "fields": [
+        "token",
+        "user"
+      ],
+      "source": "backend/app/models/user.py:12",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "UserBrief",
+      "fields": [
+        "id",
+        "nickname",
+        "avatar_url",
+        "total_xp"
+      ],
+      "source": "backend/app/models/user.py:17",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "UserProfile",
+      "fields": [
+        "id",
+        "nickname",
+        "avatar_url",
+        "total_xp",
+        "quiz_count",
+        "correct_count",
+        "average_accuracy"
+      ],
+      "source": "backend/app/models/user.py:24",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "UpdateProfileRequest",
+      "fields": [
+        "nickname",
+        "avatar_url"
+      ],
+      "source": "backend/app/models/user.py:34",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "QuizHistoryItem",
+      "fields": [
+        "quiz_id",
+        "title",
+        "accuracy",
+        "question_count",
+        "created_at"
+      ],
+      "source": "backend/app/models/user.py:39",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "QuizHistoryList",
+      "fields": [
+        "items",
+        "total",
+        "page",
+        "page_size"
+      ],
+      "source": "backend/app/models/user.py:47",
+      "disposition": "redesign-contract"
+    },
+    {
+      "name": "QuizDetailResponse",
+      "fields": [
+        "quiz_id",
+        "title",
+        "summary",
+        "user_input",
+        "questions",
+        "answer_records",
+        "report",
+        "created_at"
+      ],
+      "source": "backend/app/models/user.py:54",
+      "disposition": "redesign-contract"
+    }
+  ],
+  "tables": [
+    {
+      "name": "users",
+      "source": "backend/app/core/db.py:17",
+      "disposition": "redesign-postgresql"
+    },
+    {
+      "name": "quiz_sessions",
+      "source": "backend/app/core/db.py:30",
+      "disposition": "redesign-postgresql"
+    },
+    {
+      "name": "answer_records",
+      "source": "backend/app/core/db.py:50",
+      "disposition": "redesign-postgresql"
+    },
+    {
+      "name": "reports",
+      "source": "backend/app/core/db.py:74",
+      "disposition": "redesign-postgresql"
+    },
+    {
+      "name": "quiz_tasks",
+      "source": "backend/app/core/db.py:95",
+      "disposition": "redesign-postgresql"
+    },
+    {
+      "name": "kb_documents",
+      "source": "backend/app/core/db.py:114",
+      "disposition": "redesign-postgresql"
+    },
+    {
+      "name": "image_generation_logs",
+      "source": "backend/app/core/db.py:136",
+      "disposition": "redesign-postgresql"
+    }
+  ],
+  "prompts": [
+    {
+      "name": "QUIZ_SYSTEM_PROMPT",
+      "source": "backend/app/prompts/quiz_prompt.py:3",
+      "disposition": "rewrite-contract-and-grounding"
+    },
+    {
+      "name": "QUIZ_HUMAN_PROMPT",
+      "source": "backend/app/prompts/quiz_prompt.py:5",
+      "disposition": "rewrite-contract-and-grounding"
+    },
+    {
+      "name": "SEARCH_CONTEXT_TEMPLATE",
+      "source": "backend/app/prompts/quiz_prompt.py:46",
+      "disposition": "rewrite-contract-and-grounding"
+    },
+    {
+      "name": "RAG_AGENT_SYSTEM_PROMPT",
+      "source": "backend/app/prompts/rag_prompt.py:3",
+      "disposition": "rewrite-contract-and-grounding"
+    },
+    {
+      "name": "REPORT_SYSTEM_PROMPT",
+      "source": "backend/app/prompts/report_prompt.py:3",
+      "disposition": "rewrite-contract-and-grounding"
+    },
+    {
+      "name": "REPORT_HUMAN_PROMPT",
+      "source": "backend/app/prompts/report_prompt.py:5",
+      "disposition": "rewrite-contract-and-grounding"
+    },
+    {
+      "name": "SEARCH_AGENT_SYSTEM_PROMPT",
+      "source": "backend/app/prompts/search_prompt.py:3",
+      "disposition": "rewrite-contract-and-grounding"
+    }
+  ],
+  "tests": [
+    {
+      "name": "test_health_check",
+      "source": "backend/tests/test_api.py:114",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_generate_quiz_success",
+      "source": "backend/tests/test_api.py:124",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_generate_quiz_empty_input",
+      "source": "backend/tests/test_api.py:145",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_generate_quiz_blocked_content",
+      "source": "backend/tests/test_api.py:154",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_generate_report_success",
+      "source": "backend/tests/test_api.py:172",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_creates_valid_jwt",
+      "source": "backend/tests/test_auth.py:14",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_token_contains_user_id",
+      "source": "backend/tests/test_auth.py:19",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_token_has_expiration",
+      "source": "backend/tests/test_auth.py:25",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_decode_valid_token",
+      "source": "backend/tests/test_auth.py:32",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_decode_expired_token",
+      "source": "backend/tests/test_auth.py:37",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_decode_invalid_token",
+      "source": "backend/tests/test_auth.py:49",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_decode_tampered_token",
+      "source": "backend/tests/test_auth.py:53",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_returns_user_id_with_valid_token",
+      "source": "backend/tests/test_auth.py:62",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_raises_without_token",
+      "source": "backend/tests/test_auth.py:70",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_raises_with_invalid_token",
+      "source": "backend/tests/test_auth.py:77",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_returns_user_id_with_valid_token",
+      "source": "backend/tests/test_auth.py:86",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_returns_none_without_token",
+      "source": "backend/tests/test_auth.py:94",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_returns_none_with_invalid_token",
+      "source": "backend/tests/test_auth.py:101",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_missing_config_raises",
+      "source": "backend/tests/test_cos_service.py:12",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_uploads_and_returns_default_domain_url",
+      "source": "backend/tests/test_cos_service.py:20",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_uses_custom_domain_when_configured",
+      "source": "backend/tests/test_cos_service.py:36",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_load_and_split_txt",
+      "source": "backend/tests/test_document_loader_service.py:18",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_load_and_split_md",
+      "source": "backend/tests/test_document_loader_service.py:29",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_load_and_split_respects_chunk_size",
+      "source": "backend/tests/test_document_loader_service.py:38",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_load_and_split_pdf_dispatches_to_pypdf_loader",
+      "source": "backend/tests/test_document_loader_service.py:52",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_load_and_split_docx_dispatches_to_docx2txt_loader",
+      "source": "backend/tests/test_document_loader_service.py:70",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_load_and_split_unsupported_format_raises",
+      "source": "backend/tests/test_document_loader_service.py:88",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_prompt_contains_stem_and_knowledge_point",
+      "source": "backend/tests/test_image_service.py:30",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_replaces_compatible_mode_suffix",
+      "source": "backend/tests/test_image_service.py:40",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_leaves_other_urls_unchanged",
+      "source": "backend/tests/test_image_service.py:46",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_anonymous_user_skips_generation",
+      "source": "backend/tests/test_image_service.py:53",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_quota_exhausted_skips_all",
+      "source": "backend/tests/test_image_service.py:63",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_partial_quota_only_generates_for_remaining",
+      "source": "backend/tests/test_image_service.py:82",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_full_quota_generates_all_concurrently",
+      "source": "backend/tests/test_image_service.py:106",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_individual_failure_does_not_affect_others",
+      "source": "backend/tests/test_image_service.py:134",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_model_call_failure_returns_none",
+      "source": "backend/tests/test_image_service.py:163",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_download_failure_returns_none",
+      "source": "backend/tests/test_image_service.py:176",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_cos_upload_failure_returns_none",
+      "source": "backend/tests/test_image_service.py:193",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_success_returns_cos_url",
+      "source": "backend/tests/test_image_service.py:214",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_upload_requires_auth",
+      "source": "backend/tests/test_knowledge_api.py:27",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_upload_success",
+      "source": "backend/tests/test_knowledge_api.py:36",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_upload_rejects_invalid_document",
+      "source": "backend/tests/test_knowledge_api.py:57",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_list_documents",
+      "source": "backend/tests/test_knowledge_api.py:77",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_get_status_success",
+      "source": "backend/tests/test_knowledge_api.py:109",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_get_status_not_found",
+      "source": "backend/tests/test_knowledge_api.py:125",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_delete_success",
+      "source": "backend/tests/test_knowledge_api.py:141",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_delete_requires_auth",
+      "source": "backend/tests/test_knowledge_api.py:154",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_create_document_executes_insert",
+      "source": "backend/tests/test_knowledge_repository.py:34",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_create_document_noop_when_pool_none",
+      "source": "backend/tests/test_knowledge_repository.py:47",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_update_document_status",
+      "source": "backend/tests/test_knowledge_repository.py:54",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_get_document_found",
+      "source": "backend/tests/test_knowledge_repository.py:64",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_get_document_not_found",
+      "source": "backend/tests/test_knowledge_repository.py:75",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_list_documents",
+      "source": "backend/tests/test_knowledge_repository.py:83",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_count_documents",
+      "source": "backend/tests/test_knowledge_repository.py:97",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_count_documents_zero_when_pool_none",
+      "source": "backend/tests/test_knowledge_repository.py:105",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_delete_document",
+      "source": "backend/tests/test_knowledge_repository.py:112",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_handle_upload_rejects_unsupported_extension",
+      "source": "backend/tests/test_knowledge_service.py:21",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_handle_upload_rejects_oversized_file",
+      "source": "backend/tests/test_knowledge_service.py:27",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_handle_upload_rejects_when_quota_reached",
+      "source": "backend/tests/test_knowledge_service.py:36",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_handle_upload_success_saves_file_and_creates_record",
+      "source": "backend/tests/test_knowledge_service.py:47",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_process_document_success_updates_status_ready",
+      "source": "backend/tests/test_knowledge_service.py:77",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_process_document_no_chunks_marks_failed",
+      "source": "backend/tests/test_knowledge_service.py:97",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_process_document_loader_exception_marks_failed",
+      "source": "backend/tests/test_knowledge_service.py:116",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_get_document_status_raises_when_not_found",
+      "source": "backend/tests/test_knowledge_service.py:135",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_get_document_status_returns_data_when_found",
+      "source": "backend/tests/test_knowledge_service.py:145",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_delete_document_raises_when_not_found",
+      "source": "backend/tests/test_knowledge_service.py:165",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_delete_document_success_cascades",
+      "source": "backend/tests/test_knowledge_service.py:175",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_delete_document_tolerates_vector_delete_failure",
+      "source": "backend/tests/test_knowledge_service.py:202",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_valid_request",
+      "source": "backend/tests/test_models.py:18",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_empty_input_rejected",
+      "source": "backend/tests/test_models.py:24",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_too_long_input_rejected",
+      "source": "backend/tests/test_models.py:28",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_question_count_bounds",
+      "source": "backend/tests/test_models.py:32",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_invalid_difficulty_rejected",
+      "source": "backend/tests/test_models.py:38",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_valid_output",
+      "source": "backend/tests/test_models.py:44",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_question_option_structure",
+      "source": "backend/tests/test_models.py:55",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_valid_record",
+      "source": "backend/tests/test_models.py:62",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_negative_duration_rejected",
+      "source": "backend/tests/test_models.py:71",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_valid_output",
+      "source": "backend/tests/test_models.py:82",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_success",
+      "source": "backend/tests/test_models.py:96",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_error",
+      "source": "backend/tests/test_models.py:102",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_quiz_prompt_has_all_placeholders",
+      "source": "backend/tests/test_prompt_contract.py:8",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_report_prompt_has_all_placeholders",
+      "source": "backend/tests/test_prompt_contract.py:13",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_quiz_prompt_formattable",
+      "source": "backend/tests/test_prompt_contract.py:19",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_report_prompt_formattable",
+      "source": "backend/tests/test_prompt_contract.py:27",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_no_doc_id_uses_web_search_not_rag",
+      "source": "backend/tests/test_quiz_doc_id_integration.py:39",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_valid_ready_doc_uses_rag_context",
+      "source": "backend/tests/test_quiz_doc_id_integration.py:69",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_doc_id_without_login_rejected",
+      "source": "backend/tests/test_quiz_doc_id_integration.py:103",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_doc_id_not_found_rejected",
+      "source": "backend/tests/test_quiz_doc_id_integration.py:111",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_doc_id_not_ready_rejected",
+      "source": "backend/tests/test_quiz_doc_id_integration.py:124",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_invalid_doc_id_rejected_before_task_created",
+      "source": "backend/tests/test_quiz_doc_id_integration.py:140",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_valid_doc_id_creates_task_and_runs_with_rag",
+      "source": "backend/tests/test_quiz_doc_id_integration.py:162",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_generate_images_false_skips_image_service",
+      "source": "backend/tests/test_quiz_image_integration.py:53",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_generate_images_true_applies_urls_and_notice",
+      "source": "backend/tests/test_quiz_image_integration.py:80",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_image_service_exception_does_not_break_quiz_flow",
+      "source": "backend/tests/test_quiz_image_integration.py:115",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_quiz_generate_with_search_context",
+      "source": "backend/tests/test_quiz_search_integration.py:36",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_quiz_generate_without_search_context",
+      "source": "backend/tests/test_quiz_search_integration.py:72",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_generate_quiz_passes_search_context_to_prompt",
+      "source": "backend/tests/test_quiz_search_integration.py:106",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_fetch_rag_context_returns_content_on_success",
+      "source": "backend/tests/test_rag_service.py:72",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_fetch_rag_context_truncates_long_content",
+      "source": "backend/tests/test_rag_service.py:88",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_fetch_rag_context_returns_empty_on_timeout",
+      "source": "backend/tests/test_rag_service.py:103",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_fetch_rag_context_returns_empty_on_exception",
+      "source": "backend/tests/test_rag_service.py:116",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_fetch_rag_context_returns_empty_when_agent_response_empty",
+      "source": "backend/tests/test_rag_service.py:129",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_build_agent_excludes_web_tools_when_disabled",
+      "source": "backend/tests/test_rag_service.py:143",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_build_agent_includes_web_tools_when_enabled",
+      "source": "backend/tests/test_rag_service.py:156",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_returns_joined_content_on_success",
+      "source": "backend/tests/test_rag_service.py:35",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_returns_fallback_when_empty",
+      "source": "backend/tests/test_rag_service.py:50",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_returns_fallback_on_exception",
+      "source": "backend/tests/test_rag_service.py:60",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_all_correct",
+      "source": "backend/tests/test_scoring.py:8",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_partial_correct",
+      "source": "backend/tests/test_scoring.py:19",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_empty_records",
+      "source": "backend/tests/test_scoring.py:34",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_fetch_returns_empty_when_disabled",
+      "source": "backend/tests/test_search_service.py:40",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_fetch_returns_empty_when_no_api_key",
+      "source": "backend/tests/test_search_service.py:50",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_fetch_returns_context_on_success",
+      "source": "backend/tests/test_search_service.py:60",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_fetch_truncates_long_context",
+      "source": "backend/tests/test_search_service.py:79",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_fetch_returns_empty_on_timeout",
+      "source": "backend/tests/test_search_service.py:97",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_fetch_returns_empty_on_exception",
+      "source": "backend/tests/test_search_service.py:113",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_fetch_returns_empty_on_empty_response",
+      "source": "backend/tests/test_search_service.py:129",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_normal_content_passes",
+      "source": "backend/tests/test_security.py:7",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_blocked_content_rejected",
+      "source": "backend/tests/test_security.py:10",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_empty_content_passes",
+      "source": "backend/tests/test_security.py:13",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_mixed_case_blocked",
+      "source": "backend/tests/test_security.py:16",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_login_success",
+      "source": "backend/tests/test_user_api.py:21",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_login_existing_user",
+      "source": "backend/tests/test_user_api.py:56",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_login_empty_code_rejected",
+      "source": "backend/tests/test_user_api.py:86",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_get_profile_success",
+      "source": "backend/tests/test_user_api.py:95",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_get_profile_unauthorized",
+      "source": "backend/tests/test_user_api.py:127",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_update_profile_success",
+      "source": "backend/tests/test_user_api.py:133",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_get_quiz_list",
+      "source": "backend/tests/test_user_api.py:151",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_get_quiz_list_unauthorized",
+      "source": "backend/tests/test_user_api.py:179",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_get_quiz_detail",
+      "source": "backend/tests/test_user_api.py:185",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_get_quiz_detail_not_found",
+      "source": "backend/tests/test_user_api.py:213",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_quiz_generate_without_token",
+      "source": "backend/tests/test_user_api.py:234",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_quiz_generate_with_token",
+      "source": "backend/tests/test_user_api.py:266",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_report_generate_with_token_saves_data",
+      "source": "backend/tests/test_user_api.py:307",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_add_document_chunks_returns_count",
+      "source": "backend/tests/test_vector_store_service.py:28",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_add_document_chunks_empty_list_returns_zero",
+      "source": "backend/tests/test_vector_store_service.py:38",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_similarity_search_filters_by_doc_id",
+      "source": "backend/tests/test_vector_store_service.py:45",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_similarity_search_isolates_users",
+      "source": "backend/tests/test_vector_store_service.py:64",
+      "disposition": "port-behavior-review-old-contract"
+    },
+    {
+      "name": "test_delete_document_vectors_removes_only_target_doc",
+      "source": "backend/tests/test_vector_store_service.py:83",
+      "disposition": "port-behavior-review-old-contract"
+    }
+  ],
+  "frontend_api": [
+    {
+      "name": "waitForLogin",
+      "source": "frontend/src/services/api.ts:16",
+      "consumers": [
+        "frontend/src/pages/index/index.tsx:17",
+        "frontend/src/pages/knowledge/index.tsx:33"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "resolveLogin",
+      "source": "frontend/src/services/api.ts:19",
+      "consumers": [
+        "frontend/src/app.ts:10",
+        "frontend/src/app.ts:14",
+        "frontend/src/app.ts:22",
+        "frontend/src/app.ts:25"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "getToken",
+      "source": "frontend/src/services/api.ts:28",
+      "consumers": [
+        "frontend/src/app.ts:8",
+        "frontend/src/services/api.ts:68",
+        "frontend/src/services/api.ts:220"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "setToken",
+      "source": "frontend/src/services/api.ts:33",
+      "consumers": [
+        "frontend/src/app.ts:17"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "clearToken",
+      "source": "frontend/src/services/api.ts:38",
+      "consumers": [
+        "frontend/src/services/api.ts:85",
+        "frontend/src/services/api.ts:238"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "getCachedUser",
+      "source": "frontend/src/services/api.ts:44",
+      "consumers": [
+        "frontend/src/pages/index/index.tsx:18",
+        "frontend/src/pages/index/index.tsx:30",
+        "frontend/src/pages/quiz/index.tsx:147",
+        "frontend/src/pages/report/index.tsx:95"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "setCachedUser",
+      "source": "frontend/src/services/api.ts:50",
+      "consumers": [
+        "frontend/src/app.ts:18",
+        "frontend/src/pages/profile/index.tsx:21",
+        "frontend/src/pages/report/index.tsx:98"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "request",
+      "source": "frontend/src/services/api.ts:54",
+      "consumers": [
+        "frontend/src/services/api.ts:73"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "generateQuizAsync",
+      "source": "frontend/src/services/api.ts:99",
+      "consumers": [
+        "frontend/src/pages/index/index.tsx:49",
+        "frontend/src/pages/knowledge/index.tsx:148"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "getQuizTaskStatus",
+      "source": "frontend/src/services/api.ts:118",
+      "consumers": [
+        "frontend/src/services/api.ts:134"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "pollQuizTask",
+      "source": "frontend/src/services/api.ts:123",
+      "consumers": [
+        "frontend/src/pages/index/index.tsx:54",
+        "frontend/src/pages/knowledge/index.tsx:151"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "generateQuiz",
+      "source": "frontend/src/services/api.ts:156",
+      "consumers": [],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "generateReport",
+      "source": "frontend/src/services/api.ts:170",
+      "consumers": [
+        "frontend/src/pages/report/index.tsx:83"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "loginByCode",
+      "source": "frontend/src/services/api.ts:186",
+      "consumers": [
+        "frontend/src/app.ts:16"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "getUserProfile",
+      "source": "frontend/src/services/api.ts:194",
+      "consumers": [
+        "frontend/src/pages/profile/index.tsx:17"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "updateUserProfile",
+      "source": "frontend/src/services/api.ts:199",
+      "consumers": [
+        "frontend/src/pages/profile/index.tsx:59",
+        "frontend/src/pages/profile/index.tsx:71"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "getQuizHistory",
+      "source": "frontend/src/services/api.ts:207",
+      "consumers": [
+        "frontend/src/pages/index/index.tsx:21",
+        "frontend/src/pages/index/index.tsx:33",
+        "frontend/src/pages/profile/index.tsx:28"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "getQuizDetail",
+      "source": "frontend/src/services/api.ts:212",
+      "consumers": [
+        "frontend/src/pages/report/index.tsx:59"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "uploadKnowledgeDocument",
+      "source": "frontend/src/services/api.ts:219",
+      "consumers": [
+        "frontend/src/pages/knowledge/index.tsx:100"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "getKnowledgeDocuments",
+      "source": "frontend/src/services/api.ts:257",
+      "consumers": [
+        "frontend/src/pages/knowledge/index.tsx:35"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "getKnowledgeDocumentStatus",
+      "source": "frontend/src/services/api.ts:262",
+      "consumers": [
+        "frontend/src/pages/knowledge/index.tsx:58"
+      ],
+      "disposition": "replace-nextjs-client"
+    },
+    {
+      "name": "deleteKnowledgeDocument",
+      "source": "frontend/src/services/api.ts:267",
+      "consumers": [
+        "frontend/src/pages/knowledge/index.tsx:132"
+      ],
+      "disposition": "replace-nextjs-client"
+    }
+  ],
+  "pages": [
+    {
+      "source": "frontend/src/pages/index/index.tsx",
+      "disposition": "rewrite-web"
+    },
+    {
+      "source": "frontend/src/pages/knowledge/index.tsx",
+      "disposition": "rewrite-web"
+    },
+    {
+      "source": "frontend/src/pages/profile/index.tsx",
+      "disposition": "rewrite-web"
+    },
+    {
+      "source": "frontend/src/pages/quiz/index.tsx",
+      "disposition": "rewrite-web"
+    },
+    {
+      "source": "frontend/src/pages/report/index.tsx",
+      "disposition": "rewrite-web"
+    },
+    {
+      "source": "frontend/src/app.ts",
+      "disposition": "replace-wechat-bootstrap"
+    }
+  ],
+  "spec_requirements": [
+    {
+      "name": "User can upload a private document",
+      "source": "openspec/specs/knowledge-base-documents/spec.md:3",
+      "disposition": "review-D5-D7-source-contract"
+    },
+    {
+      "name": "Document is parsed and embedded asynchronously",
+      "source": "openspec/specs/knowledge-base-documents/spec.md:26",
+      "disposition": "review-D5-D7-source-contract"
+    },
+    {
+      "name": "User can query document processing status",
+      "source": "openspec/specs/knowledge-base-documents/spec.md:45",
+      "disposition": "review-D5-D7-source-contract"
+    },
+    {
+      "name": "User can list their own documents",
+      "source": "openspec/specs/knowledge-base-documents/spec.md:64",
+      "disposition": "review-D5-D7-source-contract"
+    },
+    {
+      "name": "User can delete their own document",
+      "source": "openspec/specs/knowledge-base-documents/spec.md:71",
+      "disposition": "review-D5-D7-source-contract"
+    },
+    {
+      "name": "Quiz generation accepts an optional knowledge base document reference",
+      "source": "openspec/specs/knowledge-base-quiz-generation/spec.md:3",
+      "disposition": "review-D5-D7-source-contract"
+    },
+    {
+      "name": "Agentic retrieval chooses between knowledge base and web search",
+      "source": "openspec/specs/knowledge-base-quiz-generation/spec.md:22",
+      "disposition": "review-D5-D7-source-contract"
+    },
+    {
+      "name": "Knowledge base retrieval is scoped and isolated per user and document",
+      "source": "openspec/specs/knowledge-base-quiz-generation/spec.md:41",
+      "disposition": "review-D5-D7-source-contract"
+    }
+  ]
+}

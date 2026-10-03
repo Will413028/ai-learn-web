@@ -1,0 +1,20 @@
+# Read-only upstream checkout, kept outside this project's eventual Git history.
+/docs/plans/2026-10-01-full-rebuild/source/
+__pycache__/
+*.pyc
+*.log
+node_modules/
+.venv/
+.next/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.tsbuildinfo
+test-results/
+playwright-report/
+.data/
+
+.env*
+.git
+
+/AGENTS.local.md

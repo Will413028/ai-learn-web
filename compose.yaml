@@ -1,0 +1,64 @@
+name: ai-learn-web
+services:
+  db:
+    init: true
+    image: pgvector/pgvector:0.8.6-pg17-trixie
+    environment:
+      POSTGRES_USER: ai_learn
+      POSTGRES_DB: ai_learn
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "127.0.0.1:55483:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "ai_learn", "-d", "ai_learn"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  migrate:
+    image: ai-learn-web-backend:local
+    build: ./backend
+    command: ["alembic", "upgrade", "head"]
+    environment: &backend-env
+      DATABASE_URL: postgresql+psycopg://ai_learn@db:5432/ai_learn
+      WEB_ORIGINS: http://127.0.0.1:3100
+      PROVIDER_MODE: fake
+      ASSET_DIRECTORY: /data
+    depends_on:
+      db:
+        condition: service_healthy
+  api:
+    image: ai-learn-web-backend:local
+    build: ./backend
+    environment: *backend-env
+    volumes:
+      - assets:/data
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8100/api/v1/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  worker:
+    image: ai-learn-web-backend:local
+    build: ./backend
+    command: ["python", "-m", "app.worker"]
+    environment: *backend-env
+    volumes:
+      - assets:/data
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+  web:
+    build: ./frontend
+    ports:
+      - "127.0.0.1:3100:3100"
+    depends_on:
+      api:
+        condition: service_healthy
+volumes:
+  postgres-data:
+  assets:
